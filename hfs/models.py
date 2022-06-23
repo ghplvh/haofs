@@ -78,7 +78,7 @@ class Account:
             except IndexError:
                 time.sleep(5)
         ver_url = re.findall(r'>(http://www.haofenshu.com/.*?)<', r['html'][0])
-        ver_code = re.findall(r'mailToken=(.*?)&', ver_url)[0]
+        ver_code = re.findall(r'mailToken=(.*?)&', ver_url[0])[0]
         ver_code = unquote(ver_code, 'utf-8')
         r = self.session.post(
             'https://hfs-be.yunxiao.com/v2/native-users/activation',
