@@ -179,7 +179,7 @@ class Account:
 class Exam:
     account: Account = None  # 考试所属账号
     examId: int = None  # 考试ID
-    data: dict = None  # 考试详细数据
+    full_data: dict = None  # 考试详细数据
     papers_data: dict = None  # 考试试卷数据字典，key为试卷名称，value为试卷对象
 
     @property
@@ -196,7 +196,28 @@ class Exam:
         self.examId = examId
         r = self.session.get(
             f'https://hfs-be.yunxiao.com/v3/exam/{examId}/overview').json()
-        self.data = r['data']
+        self.full_data = r['data']
+
+    @property
+    def data(self):
+        '''
+            获取考试详细数据的精简信息。
+        '''
+        return {
+            i: self.full_data[i]
+            for i in (
+                'examId',
+                'name',
+                'manfen',
+                'manfenBeforeGrading',
+                'score',
+                'scoreBeforeGrading',
+                'classRank',
+                'gradeRank',
+                'classRankPart',
+                'gradeRankPart',
+            )
+        }
 
     @property
     def papers(self):
@@ -206,7 +227,7 @@ class Exam:
         '''
         if self.papers_data is None:
             self.papers_data = {}
-            for i in self.data['papers']:
+            for i in self.full_data['papers']:
                 self.papers_data[i['name']] = Paper(self, i)
         return self.papers_data
 
@@ -214,7 +235,7 @@ class Exam:
         '''
             示例值：'[12345678-张三]秋季学期期末考试'
         '''
-        return f'[{self.account}]{self.data["name"]}'
+        return f'[{self.account}]{self.full_data["name"]}'
 
 
 class Paper:

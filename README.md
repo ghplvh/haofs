@@ -44,7 +44,9 @@ exam = student.get_exam(0)
 # from haofs import Exam
 # exam = Exam(student, student.exams[0]['examId'])
 
-# 获取一次考试的试卷信息
+# 获取考试详细信息，包括考试ID、考试名称、考试时间、考试成绩、满分、排名等
+
+# 获取考试的试卷信息
 print(exam.papers)
 # {'语文': <hfs.models.Paper object at 0x01>, '数学': <hfs.models.Paper object at 0x02>, '英语': <hfs.models.Paper object at 0x03>, ...}
 
