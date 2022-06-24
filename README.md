@@ -22,6 +22,7 @@ from haofs import Account
 
 # 创建账号对象
 student = Account()
+# student = Account(log=True)  # 启用日志
 
 # 初始化
 # 方式1：直接输入好分数学生账号邮箱和密码
