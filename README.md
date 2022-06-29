@@ -18,7 +18,7 @@ pip3 install haofs
 
 ```python
 # 导入库
-from haofs import Account
+from hfs import Account
 
 # 创建账号对象
 student = Account()
