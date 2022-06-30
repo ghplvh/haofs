@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='haofs',
-    version='0.4',
+    version='0.4.1',
     description='好分数(https://www.haofenshu.com/)爬虫',
     url="https://github.com/Danny-Yxzl/haofs",
     author="Yixiangzhilv",

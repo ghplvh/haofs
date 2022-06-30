@@ -58,7 +58,7 @@ class Account:
                  studentName,
                  xuehao,
                  schoolName: str = None,
-                 password: str = generate_random_string(8)):
+                 password: str = None):
         '''
             提供学生姓名和学号，自动使用临时邮箱注册、验证并登录好分数账号，返回生成账号的邮箱地址和密码。
             @param studentName: 学生姓名
@@ -67,6 +67,8 @@ class Account:
             @param password: 指定生成的学生账号设置的密码，可不填，若不填则自动生成随机密码
             返回值：元组(邮箱地址，密码)
         '''
+        if password is None:
+            password = generate_random_string(8)
         # 查找学生
         r = self.session.get(
             'https://hfs-be.yunxiao.com/v2/users/matched-students',
@@ -242,7 +244,7 @@ class Exam(IncludeAccount):
         r = self.session.get(
             f'https://hfs-be.yunxiao.com/v3/exam/{examId}/overview').json()
         self.full_data = r['data']
-        # self.logger.info(f'Exam对象{{{self}}}初始化成功。')
+        self.logger.info(f'Exam对象{{{self}}}初始化成功。')
 
     @property
     def data(self):
@@ -301,6 +303,7 @@ class Paper(IncludeAccount):
         self.account = exam.account
         self.paperData = paperData
 
+    @property
     def questions(self):
         '''
             获取试卷的题目列表。首次取值时会自动获取并缓存。
